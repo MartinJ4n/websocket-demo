@@ -1,0 +1,41 @@
+.wrapper {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navWrapper {
+  position: fixed;
+  top: 0px;
+  height: 10vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-self: center;
+  z-index: 2;
+}
+
+.formWrapper {
+  position: relative;
+  height: 100vh;
+  width: 30%;
+  display: flex;
+  align-items: center;
+  justify-self: center;
+
+  background: #f2f2f2;
+}
+
+.feedWrapper {
+  position: relative;
+  height: 100vh;
+  width: 70%;
+  display: flex;
+  align-items: center;
+  justify-self: space-evenly;
+  background-color: #f7f7f7;
+}
