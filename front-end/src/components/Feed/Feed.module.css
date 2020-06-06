@@ -1,0 +1,36 @@
+.wrapper {
+  position: relative;
+  height: 80%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  overflow-y: hidden;
+}
+
+.innerWrapper {
+  position: relative;
+  height: 100%;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  overflow-y: scroll;
+}
+
+::-webkit-scrollbar {
+  position: relative;
+  width: 5px;
+  background-color: none;
+}
+
+::-webkit-scrollbar-button {
+  display: none;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #707070;
+  position: relative;
+  border-radius: 10px;
+}
