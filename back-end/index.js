@@ -1,3 +1,4 @@
+const cors = require("cors");
 const feed = require("./routes/feed");
 const mongoose = require("mongoose");
 const express = require("express");
@@ -12,6 +13,7 @@ mongoose
   .catch((err) => console.error("Could not connect to MongoDB...", err));
 
 app.use(express.json());
+app.use(cors());
 app.use("/api/feed", feed);
 
 const port = process.env.PORT || 3003;
