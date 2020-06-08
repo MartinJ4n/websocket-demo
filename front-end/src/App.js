@@ -8,7 +8,7 @@ import Navbar from "./components/Navbar/Navbar";
 import "./App.css";
 
 const App = () => {
-  const [newMessage, setNewMessage] = useState();
+  const [inputValue, setInputValue] = useState("");
 
   const feed = useSelector((state) => state.entities.feed.list);
   const dispatch = useDispatch();
@@ -17,12 +17,15 @@ const App = () => {
     dispatch(loadFeed());
   }, [dispatch]);
 
-  const handleNewMessage = (message) => {
-    if (message) {
-      let output = { content: message.toString() };
-      setNewMessage(output);
-    }
-    console.log(newMessage);
+  const handleChange = ({ currentTarget: input }) => {
+    setInputValue(input.value);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    setInputValue("");
+    // server call
+    console.log(inputValue);
   };
 
   return (
@@ -31,7 +34,11 @@ const App = () => {
         <Navbar />
       </div>
       <div className="formWrapper">
-        <Form onNewMessage={handleNewMessage} />
+        <Form
+          inputValue={inputValue}
+          onChange={handleChange}
+          onSubmit={handleSubmit}
+        />
       </div>
       <div className="feedWrapper">
         <Feed feed={feed} />

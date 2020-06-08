@@ -19,6 +19,7 @@ export const api = ({ dispatch }) => (next) => async (action) => {
       method,
       data,
     });
+
     dispatch(actions.apiCallSuccess(response.data));
     if (onSuccess) dispatch({ type: onSuccess, payload: response.data });
   } catch (error) {

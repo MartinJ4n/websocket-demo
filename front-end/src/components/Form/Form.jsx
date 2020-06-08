@@ -1,22 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 
 import styles from "./Form.module.css";
 
-const Form = ({ onNewMessage }) => {
-  const [value, setValue] = useState("");
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    onNewMessage(value);
-  };
-
-  const onChange = ({ currentTarget: input }) => {
-    setValue(input.value);
-  };
-
+const Form = ({ inputValue, onChange, onSubmit }) => {
   return (
     <div className={styles.wrapper}>
-      <form className={styles.form} onSubmit={handleSubmit}>
+      <form className={styles.form} onSubmit={onSubmit}>
         <div className={styles.inputWrapper}>
           <textarea
             placeholder="Type your message here..."
@@ -24,7 +13,7 @@ const Form = ({ onNewMessage }) => {
             type="text"
             className={styles.input}
             name="content"
-            value={value}
+            value={inputValue}
             onChange={onChange}
           />
         </div>
