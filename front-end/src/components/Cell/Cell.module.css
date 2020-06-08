@@ -1,7 +1,7 @@
 .wrapper {
   position: relative;
   height: auto;
-  width: 100%;
+  width: 95%;
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
@@ -10,4 +10,58 @@
   border-radius: 22px;
   background: #f2f2f2;
   box-shadow: inset 5px 5px 10px #dadada, inset -5px -5px 10px #ffffff;
+  transition: all 1s;
+  animation: all 1s;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.wrapper:hover {
+  animation: press 0.7s ease-out;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+
+.wrapper:not(:hover) {
+  animation: unpress 0.7s ease-out;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+
+@keyframes press {
+  0% {
+    box-shadow: inset 5px 5px 10px #dadada, inset -5px -5px 10px #ffffff;
+    background-color: #f2f2f2;
+    border: none;
+  }
+  50% {
+    box-shadow: none;
+    border: none;
+    background-color: #f7f7f7;
+  }
+  100% {
+    box-shadow: 6px 6px 12px #c9c9c9, -6px -6px 12px #ffffff;
+    background: #f7f7f7;
+    border: none;
+    font-size: 16px;
+  }
+}
+
+@keyframes unpress {
+  0% {
+    box-shadow: 6px 6px 12px #c9c9c9, -6px -6px 12px #ffffff;
+    background: #f7f7f7;
+    border: none;
+    font-size: 16px;
+  }
+  50% {
+    box-shadow: none;
+    border: none;
+    background-color: #f7f7f7;
+  }
+  100% {
+    box-shadow: inset 5px 5px 10px #dadada, inset -5px -5px 10px #ffffff;
+    background-color: #f2f2f2;
+    border: none;
+  }
 }

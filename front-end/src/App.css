@@ -39,3 +39,16 @@
   justify-self: space-evenly;
   background-color: #f7f7f7;
 }
+
+@keyframes uncover {
+  0% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 0;
+  }
+  100% {
+    display: none;
+    z-index: -1;
+  }
+}
