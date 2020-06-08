@@ -1,40 +1,43 @@
 const cors = require("cors");
-const Feed = require("./models/feed");
-const feed = require("./routes/feedWebsocket");
+const { Feed } = require("./models/feed");
+const feed = require("./routes/feed");
 const connect = require("./dbconnection");
-
 const express = require("express");
 const app = express();
-const http = require("http").Server(app);
-const io = require("socket.io")(http);
+const server = require("http").createServer(app);
+const socketio = require("socket.io");
+
+const io = socketio(server);
+const port = process.env.PORT || 3003;
 
 app.use(express.json());
 app.use(cors());
 app.use("/api/feed", feed);
 
-const port = process.env.PORT || 3003;
-
-http.listen(port, () => console.log(`Listening on port ${port}`));
-
 io.on("connection", (socket) => {
-  console.log("user connected");
-  socket.on("disconnect", () => {
-    console.log("user disconnected");
+  console.log("Socket is connected...");
+
+  // welcome current user
+  socket.emit("message", "Welcome to finaly working socket... :)");
+
+  // feed save
+  socket.on("saveFeed", async (saveFeed) => {
+    let feed = new Feed({ content: saveFeed.content });
+    feed = await feed.save();
   });
 
-  socket.on("chat message", (msg) => {
-    console.log("message: " + msg);
-    //broadcast message to everyone in port:5000 except yourself.
-    socket.broadcast.emit("received", { content: msg });
+  // feed emit
+  Feed.find(function (err, feed_data) {
+    socket.emit("loadFeed", feed_data);
+  });
 
-    //save chat to the database
-    connect.then((db) => {
-      console.log("connected correctly to the server");
+  // broadcast when a user connects to all except the loggin in user
+  socket.broadcast.emit("message", "A user has joined the feed");
 
-      let feed = new Feed({ content: msg });
-      feed.save();
-    });
+  // broadcast to everyone when user leaves
+  socket.on("disconnect", () => {
+    io.emit("message", "A user has left the feed");
   });
 });
 
-// app.listen(port, () => console.log(`Listening on port ${port}`));
+server.listen(port, () => console.log(`Listening on port ${port}`));
