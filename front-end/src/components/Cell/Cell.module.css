@@ -17,13 +17,13 @@
 }
 
 .wrapper:hover {
-  animation: press 0.7s ease-out;
+  animation: press 0.5s ease-out;
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
 }
 
 .wrapper:not(:hover) {
-  animation: unpress 0.7s ease-out;
+  animation: unpress 0.5s ease-in;
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
 }
@@ -43,7 +43,6 @@
     box-shadow: 6px 6px 12px #c9c9c9, -6px -6px 12px #ffffff;
     background: #f7f7f7;
     border: none;
-    font-size: 16px;
   }
 }
 
@@ -52,7 +51,6 @@
     box-shadow: 6px 6px 12px #c9c9c9, -6px -6px 12px #ffffff;
     background: #f7f7f7;
     border: none;
-    font-size: 16px;
   }
   50% {
     box-shadow: none;

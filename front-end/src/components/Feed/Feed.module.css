@@ -18,6 +18,7 @@
   align-items: center;
   justify-content: flex-start;
   overflow-y: scroll;
+  /* transition: all 1s; */
 }
 
 ::-webkit-scrollbar {
