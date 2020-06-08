@@ -7,15 +7,17 @@ const Form = () => {
     <div className={styles.wrapper}>
       <form className={styles.form}>
         <div className={styles.inputWrapper}>
-          <input
+          <textarea
             placeholder="Type your message here..."
             required
             type="text"
             className={styles.input}
+            name="content"
           />
         </div>
         <div className={styles.submitWrapper}>
-          <input type="submit" value="Submit" className={styles.submit} />
+          {/* <input type="submit" value="Submit" className={styles.submit} /> */}
+          <button className={styles.submit}>Submit</button>
         </div>
       </form>
     </div>

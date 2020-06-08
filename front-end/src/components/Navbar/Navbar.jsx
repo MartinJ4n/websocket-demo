@@ -10,6 +10,7 @@ const Navbar = () => {
     let format = hours >= 12 ? "PM" : "AM";
     hours = hours % 12;
     minutes = minutes < 10 ? "0" + minutes : minutes;
+    hours = hours !== 0 ? hours : format === "PM" && 12;
     return `${hours}:${minutes} ${format}`;
   };
 
