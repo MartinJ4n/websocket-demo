@@ -24,17 +24,38 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 35px;
+  background: #f2f2f2;
+  box-shadow: 6px 6px 12px #c9c9c9, -6px -6px 12px #ffffff;
+  border: 3px solid #eeeeee;
 }
 
 .input {
   position: relative;
-  height: 100%;
-  width: 100%;
-  border-radius: 35px;
+  height: 90%;
+  width: 90%;
+  resize: none;
   background: #f2f2f2;
-  box-shadow: 6px 6px 12px #c9c9c9, -6px -6px 12px #ffffff;
   border: none;
   outline: none;
+  padding: 30px;
+  display: flex;
+  align-items: flex-start;
+  word-break: break-all;
+  word-wrap: normal;
+  white-space: pre-wrap;
+  text-align: justify;
+  transition: all 0.5s;
+  font-size: 20px;
+  overflow-x: wrap;
+  overflow-y: scroll;
+  font-family: "Montserrat";
+  max-height: 700px;
+  min-width: 90%;
+}
+
+.input:focus {
+  font-size: 22px;
 }
 
 .submitWrapper {
@@ -52,13 +73,20 @@
   width: 100%;
   background-color: #f2f2f2;
 
-  background: linear-gradient(145deg, #39393d, #434349);
-  border: 3px solid #f2f2f2;
-  background-color: #3f3f44;
-  color: #fdcb9e;
+  /* background: linear-gradient(145deg, #39393d, #434349); */
+  border: 3px solid #eeeeee;
+  background-color: #f2f2f2;
+  color: #7d7d7d;
   border-radius: 35px;
   outline: none;
-  /* border: none; */
-
+  font-size: 25px;
+  font-weight: 500;
   box-shadow: 6px 6px 12px #c9c9c9, -6px -6px 12px #ffffff;
+  transition: all 1s;
+  cursor: pointer;
+}
+
+.submit:hover {
+  box-shadow: 12px 12px 24px #c9c9c9, -12px -12px 24px #ffffff;
+  font-size: 27px;
 }

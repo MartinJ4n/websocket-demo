@@ -19,7 +19,7 @@ const Feed = () => {
     {
       id: 3,
       content:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia, officiis? Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia, officiis?",
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia, officiis? Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia, officiis? ",
     },
     {
       id: 4,
