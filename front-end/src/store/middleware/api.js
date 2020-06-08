@@ -3,7 +3,7 @@ import * as actions from "../api";
 
 const baseURL = "http://localhost:3003";
 
-const api = ({ dispatch }) => (next) => async (action) => {
+export const api = ({ dispatch }) => (next) => async (action) => {
   if (action.type !== actions.apiCallBegan.type) return next(action);
 
   const { url, method, data, onStart, onSuccess, onError } = action.payload;
