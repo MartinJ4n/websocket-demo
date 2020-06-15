@@ -3,7 +3,7 @@ const express = require("express");
 const router = express.Router();
 
 router.get("/", async (req, res) => {
-  const feed = await Feed.find().sort("content");
+  const feed = await Feed.find().sort({ date: 1 });
 
   res.send(feed);
 });

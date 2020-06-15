@@ -8,6 +8,10 @@ const feedSchema = new mongoose.Schema({
     min: 3,
     maxlength: 255,
   },
+  date: {
+    type: Date,
+    default: Date.now(),
+  },
 });
 
 const Feed = mongoose.model("Feed", feedSchema);

@@ -20,16 +20,25 @@ io.on("connection", (socket) => {
   // welcome current user
   socket.emit("message", "Welcome to finaly working socket... :)");
 
-  // feed save
-  socket.on("saveFeed", async (saveFeed) => {
-    let feed = new Feed({ content: saveFeed.content });
+  socket.on("feed", async (newFeed) => {
+    let feed = new Feed({ content: newFeed });
     feed = await feed.save();
+    console.log(newFeed);
+
+    let updatedFeed = await Feed.find();
+    io.emit("feed", updatedFeed);
   });
 
+  // feed save
+  // socket.on("saveFeed", async (saveFeed) => {
+  //   let feed = new Feed({ content: saveFeed.content });
+  //   feed = await feed.save();
+  // });
+
   // feed emit
-  Feed.find(function (err, feed_data) {
-    socket.emit("loadFeed", feed_data);
-  });
+  // Feed.find(function (err, feed_data) {
+  //   socket.emit("loadFeed", feed_data);
+  // });
 
   // broadcast when a user connects to all except the loggin in user
   socket.broadcast.emit("message", "A user has joined the feed");
