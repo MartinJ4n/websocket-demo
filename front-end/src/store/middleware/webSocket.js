@@ -1,66 +1,29 @@
-import * as actions from "../slices/webSocket";
-import { updateGame } from "../modules/game";
+import io from "socket.io-client";
+import * as actions from "../api";
 
-const socketMiddleware = () => {
-  let socket = null;
+const socket = io("http://localhost:3003");
 
-  const onOpen = (store) => (event) => {
-    console.log("websocket open", event.target.url);
-    store.dispatch(actions.wsConnected(event.target.url));
-  };
+export const webSocket = ({ dispatch }) => (next) => async (action) => {
+  if (action.type !== actions.wsConnection.type) return next(action);
 
-  const onClose = (store) => () => {
-    store.dispatch(actions.wsDisconnected());
-  };
+  const { name, method, content, onStart, onSuccess } = action.payload;
 
-  const onMessage = (store) => (event) => {
-    const payload = JSON.parse(event.data);
-    console.log("receiving server message");
+  if (method === "get") {
+    await socket.on(name, (feed) => {
+      next(action);
+      const payload = {
+        content: feed,
+      };
 
-    switch (payload.type) {
-      case "update_game_players":
-        store.dispatch(updateGame(payload.game, payload.current_player));
-        break;
-      default:
-        break;
-    }
-  };
+      if (onSuccess) dispatch({ type: onSuccess, payload });
+    });
+  }
 
-  // the middleware part of this function
-  return (store) => (next) => (action) => {
-    switch (action.type) {
-      case "WS_CONNECT":
-        if (socket !== null) {
-          socket.close();
-        }
+  if (method === "post") {
+    await socket.emit(name, content);
 
-        // connect to the remote host
-        socket = new WebSocket(action.host);
-
-        // websocket handlers
-        socket.onmessage = onMessage(store);
-        socket.onclose = onClose(store);
-        socket.onopen = onOpen(store);
-
-        break;
-      case "WS_DISCONNECT":
-        if (socket !== null) {
-          socket.close();
-        }
-        socket = null;
-        console.log("websocket closed");
-        break;
-      case "NEW_MESSAGE":
-        console.log("sending a message", action.msg);
-        socket.send(
-          JSON.stringify({ command: "NEW_MESSAGE", message: action.msg })
-        );
-        break;
-      default:
-        console.log("the next action:", action);
-        return next(action);
-    }
-  };
+    if (onStart) dispatch({ type: onStart });
+  }
 };
 
-export default socketMiddleware();
+export default webSocket;

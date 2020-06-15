@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { apiCallBegan } from "../api";
+import { apiCallBegan, wsConnection } from "../api";
 
-let lastId = 0;
 const url = "/api/feed";
 
 const slice = createSlice({
@@ -19,7 +18,7 @@ const slice = createSlice({
     },
 
     feedReceived: (feed, action) => {
-      feed.list = action.payload;
+      feed.list = action.payload.content || action.payload;
       feed.loading = false;
       feed.lastFetch = Date.now();
     },
@@ -29,10 +28,7 @@ const slice = createSlice({
     },
 
     feedAdded: (feed, action) => {
-      feed.list.push({
-        id: ++lastId,
-        content: action.payload.content,
-      });
+      feed.list.push(action.payload);
     },
   },
 });
@@ -45,10 +41,36 @@ export const {
 } = slice.actions;
 export default slice.reducer;
 
+// RESTful API
 export const loadFeed = () =>
   apiCallBegan({
     url,
     onStart: feedRequested.type,
     onSuccess: feedReceived.type,
     onError: feedRequestFailed.type,
+  });
+
+export const saveFeed = (feed) =>
+  apiCallBegan({
+    url,
+    method: "post",
+    data: feed,
+    onSuccess: feedAdded.type,
+  });
+
+// WebSocket
+export const connectFeed = () =>
+  wsConnection({
+    name: "feed",
+    method: "get",
+    onSuccess: feedReceived.type,
+    onError: feedRequestFailed.type,
+  });
+
+export const sendFeed = (content) =>
+  wsConnection({
+    name: "feed",
+    method: "post",
+    content,
+    onStart: feedRequested.type,
   });

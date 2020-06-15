@@ -2,7 +2,7 @@ import React from "react";
 
 import styles from "./Form.module.css";
 
-const Form = ({ inputValue, onChange, onSubmit }) => {
+const Form = ({ inputValue, onChange, onSubmit, onKeyPress }) => {
   return (
     <div className={styles.wrapper}>
       <form className={styles.form} onSubmit={onSubmit}>
@@ -15,6 +15,7 @@ const Form = ({ inputValue, onChange, onSubmit }) => {
             name="content"
             value={inputValue}
             onChange={onChange}
+            onKeyPress={onKeyPress}
           />
         </div>
         <div className={styles.submitWrapper}>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { loadFeed } from "./store/slices/feed";
+import { loadFeed, connectFeed, sendFeed } from "./store/slices/feed";
 import Feed from "./components/Feed/Feed";
 import Form from "./components/Form/Form";
 import Navbar from "./components/Navbar/Navbar";
@@ -15,6 +15,7 @@ const App = () => {
 
   useEffect(() => {
     dispatch(loadFeed());
+    dispatch(connectFeed());
   }, [dispatch]);
 
   const handleChange = ({ currentTarget: input }) => {
@@ -23,9 +24,15 @@ const App = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    dispatch(sendFeed(inputValue));
     setInputValue("");
-    // server call
-    console.log(inputValue);
+  };
+
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      dispatch(sendFeed(inputValue));
+      setInputValue("");
+    }
   };
 
   return (
@@ -38,6 +45,7 @@ const App = () => {
           inputValue={inputValue}
           onChange={handleChange}
           onSubmit={handleSubmit}
+          onKeyPress={handleKeyPress}
         />
       </div>
       <div className="feedWrapper">
